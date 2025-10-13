@@ -1,0 +1,44 @@
+\PassOptionsToPackage{dvipsnames}{xcolor}
+\documentclass[10pt,a4paper]{altacv}
+\geometry{left=1cm,right=9cm,marginparwidth=6.8cm,marginparsep=1.2cm,top=1.25cm,bottom=1.25cm,footskip=2\baselineskip}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[default]{lato}
+\usepackage{hyperref}
+\definecolor{Mulberry}{HTML}{72243D}
+\definecolor{SlateGrey}{HTML}{2E2E2E}
+\definecolor{LightGrey}{HTML}{666666}
+\colorlet{heading}{Sepia}
+\colorlet{accent}{Mulberry}
+\colorlet{emphasis}{SlateGrey}
+\colorlet{body}{LightGrey}
+\renewcommand{\itemmarker}{{\small\textbullet}}
+\renewcommand{\ratingmarker}{\faCircle}
+\addbibresource{sample.bib}
+\begin{document}
+\name{ ((( name ))) }
+\tagline{ ((( job_title ))) }
+\photo{2.8cm}{ profile_picture }
+\personalinfo{
+    \email{\href{mailto://((( email )))}{((( email )))}}
+    \linkedin{\href{http://((( linkedin )))}{((( linkedin )))}}
+    \github{\href{http://((( github )))}{((( github )))}}
+}
+\begin{fullwidth}
+\makecvheader
+\end{fullwidth}
+
+\cvsection[sidebar]{ ((( experience_title ))) }
+
+((* for job in experience *))
+\cvevent{ ((( job.title ))) }{ ((( job.company ))) }{ ((( job.period ))) }{ ((( job.location ))) }
+\begin{itemize}
+    ((* for point in job.points *))
+    \item ((( point.title ))): ((( point.description ))).
+    ((* endfor *))
+\end{itemize}
+\textit{Tools: ((( job.tools ))) }
+\divider
+((* endfor *))
+
+\end{document} 

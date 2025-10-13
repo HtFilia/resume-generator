@@ -2,3 +2,5 @@
 build
 logs
 profile_picture.jpg
+.DS_Store
+data

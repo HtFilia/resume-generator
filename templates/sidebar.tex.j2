@@ -1,0 +1,39 @@
+\cvsection{ ((( education_title ))) }
+
+((* for edu in education *))
+\cvevent{((( edu.title )))}{((( edu.school )))}{((( edu.period )))}{}
+
+\begin{itemize}
+    \item ((( edu.description ))) \textbf{((( edu.desc_title )))}
+\end{itemize}
+((* if edu.skills *))
+\textit{((( edu.skills )))}.
+((* endif *))
+\divider 
+((* endfor *))
+
+\cvsection{((( skills_title )))}
+
+\wheelchart{1.5cm}{0.5cm}{
+  8/8em/accent!60/((( skill_one ))),
+  6/8em/accent!20/((( skill_two ))),
+  6/8em/accent!50/((( skill_three ))),
+  5/6em/accent!30/((( skill_four )))
+}
+
+\medskip
+
+\cvsection{((( certif_title )))}
+
+((* for certif in certifications *))
+\cvtag{\href{((( certif.url )))}{((( certif.title )))}}
+((* endfor *))
+
+\medskip
+
+\cvsection{((( languages_title )))}
+
+((* for lang in languages *))
+\cvskill{((( lang.name ))) {\normalfont\footnotesize (((( lang.explain ))))}}{((( lang.score )))}
+\divider
+((* endfor *))
