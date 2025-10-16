@@ -22,7 +22,7 @@ french: $(VENV)/bin/activate
 clean:
 	rm -rf $(BUILD_DIR) *.aux *.log *.out *.bbl *.blg
 
-full_clean: clean
+full-clean: clean
 	@rm -rf $(VENV)
 
 rebuild: clean all
