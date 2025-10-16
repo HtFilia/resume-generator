@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import yaml
+import shutil
 from jinja2 import Environment, FileSystemLoader
 import subprocess
 import sys
@@ -55,8 +56,18 @@ def render_resume(lang):
     build_dir.mkdir(exist_ok=True)
     logs_dir.mkdir(exist_ok=True)
 
+    # Copy cls file and profile_picture to build dir
+    cls_file = Path("altacv.cls")
+    picture_file = Path("profile_picture.jpg")
+    if cls_file.exists() and picture_file.exists():
+        shutil.copy(cls_file, build_dir / cls_file.name)
+        shutil.copy(picture_file, build_dir / picture_file.name)
+    else:
+        print("⚠️ Warning: altacv.cls or profile_picture.jpg not found in project root!")
+        return
+    
     # Write rendered .tex files
-    sidebar_file = build_dir / f"sidebar_{lang}.tex"
+    sidebar_file = build_dir / "sidebar.tex"
     sidebar_file.write_text(sidebar_tex, encoding="utf-8")
     output_tex.write_text(main_tex, encoding="utf-8")
 
@@ -69,10 +80,25 @@ def render_resume(lang):
     log4 = logs_dir / f"{lang}_pdflatex3.log"
 
     # Run LaTeX toolchain quietly (logs in /logs)
-    run_command(["pdflatex", "-interaction=nonstopmode", "-output-directory=build", str(output_tex)], log_file=log1)
-    run_command(["biber", str(output_tex.with_suffix(""))], log_file=log2)
-    run_command(["pdflatex", "-interaction=nonstopmode", "-output-directory=build", str(output_tex)], log_file=log3)
-    run_command(["pdflatex", "-interaction=nonstopmode", "-output-directory=build", str(output_tex)], log_file=log4)
+    run_command(
+        ["pdflatex", "-interaction=nonstopmode", f"{lang}.tex"],
+        log_file=log1,
+        cwd=build_dir,
+    )
+    run_command(
+        ["biber", str(output_tex.with_suffix(""))],
+        log_file=log2,
+    )
+    run_command(
+        ["pdflatex", "-interaction=nonstopmode", f"{lang}.tex"],
+        log_file=log3,
+        cwd=build_dir,
+    )
+    run_command(
+        ["pdflatex", "-interaction=nonstopmode", f"{lang}.tex"],
+        log_file=log4,
+        cwd=build_dir,
+    )
 
     if output_pdf.exists():
         print(f"✅ Successfully generated {output_pdf}")
