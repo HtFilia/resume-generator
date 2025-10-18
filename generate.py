@@ -58,7 +58,7 @@ def render_resume(lang):
 
     # Copy cls file and profile_picture to build dir
     cls_file = Path("altacv.cls")
-    picture_file = Path("profile_picture.jpg")
+    picture_file = Path("profile_picture.png")
     if cls_file.exists() and picture_file.exists():
         shutil.copy(cls_file, build_dir / cls_file.name)
         shutil.copy(picture_file, build_dir / picture_file.name)

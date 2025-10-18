@@ -1,27 +1,30 @@
 \PassOptionsToPackage{dvipsnames}{xcolor}
-\documentclass[10pt,a4paper]{altacv}
-\geometry{left=1cm,right=9cm,marginparwidth=6.8cm,marginparsep=1.2cm,top=1.25cm,bottom=1.25cm,footskip=2\baselineskip}
+\documentclass[10.5pt,a4paper]{altacv}
+\geometry{
+  left=1.2cm,
+  right=9.5cm,
+  marginparwidth=7.5cm,
+  marginparsep=0.8cm,
+  top=1.2cm,
+  bottom=1.2cm
+}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage[default]{lato}
+\usepackage[sfdefault,light]{FiraSans}
 \usepackage{hyperref}
-\definecolor{Mulberry}{HTML}{72243D}
-\definecolor{SlateGrey}{HTML}{2E2E2E}
-\definecolor{LightGrey}{HTML}{666666}
-\colorlet{heading}{Sepia}
-\colorlet{accent}{Mulberry}
-\colorlet{emphasis}{SlateGrey}
-\colorlet{body}{LightGrey}
 \renewcommand{\itemmarker}{{\small\textbullet}}
 \renewcommand{\ratingmarker}{\faCircle}
-\addbibresource{sample.bib}
+\linespread{1.04}
 \begin{document}
+\renewcommand\normalsize{\fontsize{10.5}{12.5}\selectfont}
 \name{ ((( name ))) }
 \tagline{ ((( job_title ))) }
 \photo{2.8cm}{ profile_picture }
 \personalinfo{
     \email{\href{mailto://((( email )))}{((( email )))}}
+    \separator
     \linkedin{\href{http://((( linkedin )))}{((( linkedin )))}}
+    \separator
     \github{\href{http://((( github )))}{((( github )))}}
 }
 \begin{fullwidth}
@@ -34,11 +37,20 @@
 \cvevent{ ((( job.title ))) }{ ((( job.company ))) }{ ((( job.period ))) }{ ((( job.location ))) }
 \begin{itemize}
     ((* for point in job.points *))
-    \item ((( point.title ))): ((( point.description ))).
+    \item \textbf{((( point.section ))):}
+      \begin{itemize}
+        ((* for task in point.tasks *))
+        \item ((( task )))
+        ((* endfor *))
+      \end{itemize}
     ((* endfor *))
 \end{itemize}
-\textit{Tools: ((( job.tools ))) }
+\vspace{0.45em}
+{\raggedleft\footnotesize\textit{Tools: ((( job.tools ))) }\par}
+\vspace{0.25em}
+((* if not loop.last *))
 \divider
+((* endif *))
 ((* endfor *))
 
-\end{document} 
+\end{document}

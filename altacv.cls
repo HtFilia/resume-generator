@@ -24,7 +24,7 @@
 
 \LoadClass{extarticle}
 
-\RequirePackage[margin=2cm]{geometry}
+\RequirePackage[margin=1.7cm]{geometry}
 \RequirePackage{fontawesome}
 
 %% v1.1: Optionally load academicons
@@ -39,10 +39,14 @@
 
 \RequirePackage{xcolor}
 
-\colorlet{accent}{blue!70!black}
-\colorlet{heading}{black}
+\definecolor{NavyBlue}{HTML}{1A385B}
+\definecolor{SteelGrey}{HTML}{444444}
+\definecolor{LightGrey}{HTML}{777777}
+\colorlet{heading}{NavyBlue}
+\colorlet{accent}{NavyBlue}
+\colorlet{body}{SteelGrey}
 \colorlet{emphasis}{black}
-\colorlet{body}{black!80!white}
+
 \newcommand{\itemmarker}{{\small\textbullet}}
 \newcommand{\ratingmarker}{\faCircle}
 
@@ -50,17 +54,21 @@
 \usetikzlibrary{arrows}
 \RequirePackage[skins]{tcolorbox}
 \RequirePackage{enumitem}
-\setlist{leftmargin=*,labelsep=0.5em,nosep,itemsep=0.25\baselineskip,after=\vskip0.25\baselineskip}
-\setlist[itemize]{label=\itemmarker}
+\setlist{leftmargin=*,labelsep=0.4em,nosep,itemsep=0pt,topsep=0pt,parsep=0pt,partopsep=0pt,after=\vskip0pt}
+\setlist[itemize,1]{label=\textcolor{accent}{\faAngleDoubleRight},leftmargin=1.2em,itemsep=0.1em,topsep=0.1em}
+\setlist[itemize,2]{label=\textcolor{accent}{\faAngleRight},leftmargin=1.4em,itemsep=0.1em,topsep=0.1em}
 \RequirePackage{graphicx}
 \RequirePackage{etoolbox}
 \RequirePackage{dashrule}
 \RequirePackage{multirow,tabularx}
 \RequirePackage{changepage}
-% \RequirePackage{marginfix}
 
 \setlength{\parindent}{0pt}
-\newcommand{\divider}{\textcolor{body!30}{\hdashrule{\linewidth}{0.6pt}{0.5ex}}\medskip}
+\newcommand{\divider}{%
+  \vspace{0.2em}%
+  {\color{body!35}\hdashrule[0.5ex]{\linewidth}{0.4pt}{1pt 1.5pt}}%
+  \vspace{0.4em}%
+}
 
 \newenvironment{fullwidth}{%
   \begin{adjustwidth}{}{\dimexpr-\marginparwidth-\marginparsep\relax}}
@@ -96,9 +104,9 @@
     \ifdef{\@photodiameter}{\begin{minipage}{\dimexpr\linewidth-\@photodiameter-2em}}{}%
     \raggedright\color{emphasis}%
     {\Huge\bfseries\MakeUppercase{\@name}\par}
-    \medskip
+    \vspace{0.25em}
     {\large\bfseries\color{accent}\@tagline\par}
-    \medskip
+    \vspace{0.25em}
     {\footnotesize\bfseries\@personalinfo\par}
     \ifdef{\@photodiameter}{%
     \end{minipage}\hfill%
@@ -115,8 +123,8 @@
 \renewenvironment{quote}{\color{accent}\itshape\large}{\par}
 
 \newcommand{\cvsection}[2][]{%
-  \bigskip%
-  \ifstrequal{#1}{}{}{\marginpar{\vspace*{\dimexpr1pt-\baselineskip}\raggedright\input{#1}}}% 
+  \smallskip%
+  \ifstrequal{#1}{}{}{\marginpar{\vspace*{-0.1635\baselineskip}\raggedright\input{#1}}}%
   {\color{heading}\LARGE\bfseries\MakeUppercase{#2}}\\[-1ex]%
   {\color{heading}\rule{\linewidth}{2pt}\par}\medskip
 }
@@ -131,9 +139,20 @@
   \smallskip
   \textbf{\color{accent}#2}\par
   \smallskip
-  {\small\makebox[0.5\linewidth][l]{\faCalendar \hspace{0.5em}#3}%
-  \ifstrequal{#4}{}{}{\makebox[0.5\linewidth][l]{\faMapMarker\hspace{0.5em}#4}}\par}
-  \medskip
+  {\small
+    \ifstrequal{#3}{}{%
+      % Do nothing if #3 is empty
+    }{%
+      \makebox[0.5\linewidth][l]{\faCalendar\hspace{0.5em}#3}%
+    }%
+    \ifstrequal{#4}{}{%
+      % Do nothing if #4 is empty
+    }{%
+      \makebox[0.5\linewidth][l]{\faMapMarker\hspace{0.5em}#4}%
+    }%
+    \par
+  }
+  \vspace{0.15\baselineskip}
 }
 
 \newcommand{\cvachievement}[3]{%
@@ -145,7 +164,10 @@
 }
 
 \newcommand{\cvtag}[1]{%
-  \tikz[baseline]\node[anchor=base,draw=body!30,rounded corners,inner xsep=1ex,inner ysep =0.75ex,text height=1.5ex,text depth=.25ex]{#1};
+  \tikz[baseline]\node[anchor=base,draw=body!30,rounded corners,
+  inner xsep=0.7ex,inner ysep=0.5ex,
+  text height=1.2ex,text depth=.2ex,
+  font=\footnotesize]{#1};
 }
 
 \newcommand{\cvskill}[2]{%
@@ -207,6 +229,10 @@
     \end{tikzpicture}
     \endgroup
 }
+\setlist[itemize]{leftmargin=1.2em,itemsep=0.1em,topsep=0.1em}
+\renewcommand{\itemmarker}{\scriptsize$\blacktriangleright$}
+\newcommand{\separator}{\hspace{0.75em}\textcolor{body}{|}\hspace{0.75em}}
+
 
 \newcommand{\cvref}[3]{%
   \smallskip
@@ -236,6 +262,11 @@
   \ifstrequal{#1}{}{}{\vspace*{#1}}%
   \input{#2}}%
 }
+\setlength{\parskip}{0pt}
+\setlength{\parsep}{0pt}
+\setlength{\partopsep}{0pt}
+\setlength{\topsep}{0pt}
+\setlength{\itemsep}{0pt}
 \newcommand{\addnextpagesidebar}[2][]{\afterpage{\addsidebar[#1]{#2}}}
 \newlist{coloritemize}{itemize}{1}
 \setlist[coloritemize]{label=\textcolor{accent}{\textbullet}}
